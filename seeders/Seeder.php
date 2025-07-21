@@ -28,27 +28,16 @@ class Seeder
         self::connect();
 
         try {
-            self::$pdo->exec("INSERT INTO typeUser (libelle) VALUES 
-                ('client'),
-                ('serviceCommercial')");
-            echo "Types d'utilisateurs insérés.\n";
-
-            self::$pdo->exec("INSERT INTO users (nom, prenom, login, password, typeUserId, adresse, numeroCNI, photoIdentite) VALUES 
-                ('Diop', 'sigi', 'sidi@gmail.com', 'Sidi@2024', 1, 'Dakar', '1234567890123', 'photo_identite.jpg')");
-            echo " Utilisateur inséré.\n";
-
-            self::$pdo->exec("INSERT INTO compte (numero, datecreation, solde, typecompte) VALUES 
-                ('1234567890', '2023-01-01', 1000.00, 'principal')");
-            echo "Compte inséré.\n";
-
-            self::$pdo->exec("INSERT INTO numeroTelephone (numero, user_id, compte_id) VALUES 
-                ('771234567', 1, 1)");
-            echo "Numéro de téléphone inséré.\n";
-
-            self::$pdo->exec("INSERT INTO transactions (dateTransaction, typeTransaction, montant, libelle, client_id, compte_id) VALUES 
-                ('2023-01-01', 'depot', 500.00, 'Dépôt initial', 1, 1)");
-            echo "Transaction insérée.\n";
-
+                self::$pdo->exec("INSERT INTO citoyen (nom, prenom, numerocni, photoIdentite, lieuNaiss, dateNaiss) VALUES 
+                ('Diop', 'sidi', '1234567890123', 'photo_identite1.jpg', 'Dakar', '1980-01-01'),
+                ('Gueye', 'mohamed', '1344567890123', 'photo_identite2.jpg', 'Dakar', '2004-01-01'),
+                ('Ly', 'Abdoulaye', '1454567890123', 'photo_identite3.jpg', 'Dakar', '2002-01-01'),
+                ('Diallo', 'Alassane', '1564567890123', 'photo_identite4.jpg', 'Yeumbeul', '2001-01-01'),
+                ('Ndiaye', 'Moussa', '1674567890123', 'photo_identite5.jpg', 'Dakar', '1998-01-01'),
+                ('Sarr', 'Libasse', '1784567890123', 'photo_identite6.jpg', 'Sacre Coeur', '2005-11-21'),
+                ('Ly', 'Abdoulaye', '1894567890123', 'photo_identite7.jpg', 'Mermoz', '2002-01-01')
+                ");
+            echo " Citoyen inséré.\n";
             echo "Toutes les données de test ont été insérées avec succès.\n";
 
         } catch (PDOException $e) {
