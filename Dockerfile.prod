@@ -1,0 +1,22 @@
+FROM php:8.3-fpm as php
+
+RUN apt-get update && apt-get install -y \
+    libpq-dev libzip-dev zip unzip \
+    && docker-php-ext-install pdo pdo_pgsql pgsql
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Install NGINX
+RUN apt-get install -y nginx
+
+# Copy nginx config
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy app
+WORKDIR /var/www/html
+COPY . .
+
+# Start both NGINX and PHP-FPM
+CMD service php8.3-fpm start && nginx -g "daemon off;"
+
+EXPOSE 80
