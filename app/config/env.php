@@ -3,8 +3,11 @@
 use Dotenv\Dotenv;
 
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
-$dotenv->load();
+// $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+// $dotenv->load();
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../', null, false);
+$dotenv->safeLoad();
 
 
 define('DB_USER', $_ENV['DB_USER']);
