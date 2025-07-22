@@ -1,15 +1,46 @@
 <?php 
 namespace App\Repository;
 
-use App\Core\Abstract\AbstractRepository;
+use ICitoyenRepository;
+use \PDOException;
 
-class CitoyenRepository extends AbstractRepository{
+use App\Core\Abstract\AbstractRepository;
+use App\Entity\Citoyen;
+
+class CitoyenRepository extends AbstractRepository {
+
+    private string $table = 'citoyen';
     
-   public function selectAll(){}
-     public function insert(array $data){}
-     public function update(){}
-     public function delete(){}
-     public function selectById($id){}
-     public function selectBy(array $filter){}
+    public function __construct(){
+        parent::__construct();
+    }
+   public function selectAll():array{
+     try{
+        $sql = "SELECT * FROM $this->table";
+        $stmt = $this->pdo->prepare($sql);
+        $result = $stmt->execute();
+       
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        
+        
+     }catch (Exception $e) {
+        error_log("Erreur de  recuperation des citoyens : " . $e->getMessage());
+    }
+   }
+     public function insert(array $data){        
+     }
+
+    //  public function selectByCni(string $cni): ?Citoyen{
+    //     try{
+
+    //     }
+    //  }
+    
+
+      
+
+   
+
+    
 
 }

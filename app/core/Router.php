@@ -5,38 +5,46 @@ namespace App\Core;
 require_once "../app/config/middlewares.php";
 
 
-class Router{
+class Router
+{
+    public static function resolve(array $routes): void
+    {
+        $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-    private static Router|null $instance = null;
+        foreach ($routes as $route) {
+            [$method, $pattern, $handler] = $route;
 
-    public function getInstance(){
-        if(self::$instance === null){
-            self::$instance = new Router();
+            $regex = preg_replace('#\{[^/]+\}#', '([^/]+)', $pattern);
+            $regex = "#^" . $regex . "$#";
+
+            if ($method === $requestMethod && preg_match($regex, $requestUri, $matches)) {
+                array_shift($matches); 
+                [$controllerClass, $controllerMethod] = $handler;
+                if (class_exists($controllerClass) && method_exists($controllerClass, $controllerMethod)) {
+                    $controller = new $controllerClass();
+                    $controller->$controllerMethod(...$matches);
+                    return;
+                }
+                http_response_code(500);
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'data' => null,
+                    'statut' => 'error',
+                    'code' => 500,
+                    'message' => 'Contrôleur ou méthode non trouvée'
+                ]);
+                return;
+            }
         }
-        return self::$instance;
-    }
 
-
-    public static function resolve($uris){
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        
-        $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
-        $currentUri = trim($requestUri, '');
-        
-        if (isset($uris[$currentUri])) {
-            $route = $uris[$currentUri];
-            $controllerClass = $route['controller'];
-            $method = $route['method'];
-             $middlewares = $route['middlewares'] ?? [];
-            
-            runMiddleWare($middlewares);
-           
-            $controller = new $controllerClass();
-            $controller->$method();
-        } else {
-           
-        }
+        http_response_code(404);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'data' => null,
+            'statut' => 'error',
+            'code' => 404,
+            'message' => 'Endpoint non trouvé'
+        ]);
     }
 }

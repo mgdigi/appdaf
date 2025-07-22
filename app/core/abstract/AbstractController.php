@@ -35,14 +35,29 @@ abstract class AbstractController extends Session{
 
     
 
+    // public function renderJson($data){
+    //     header('Content-Type: application/json');
+    //     echo json_encode($data);
+    // }
     
-    public function render(string $views, array $data = []){
-        extract($data);
-        ob_start();
-        require_once '../templates/'.$views;
-        $contentForLayout = ob_get_clean();
-        require_once '../templates/layout/'. $this->layout . '.layout.php';
+      public function renderJson($data, $httpCode = 200)
+    {
+        // Nettoyer tout buffer de sortie précédent
+        if (ob_get_level()) {
+            ob_clean();
+        }
+        
+        // Forcer les headers JSON
+        http_response_code($httpCode);
+        header('Content-Type: application/json; charset=UTF-8');
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        
+        // Sortir le JSON et arrêter l'exécution
+        echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        exit; // Important : arrêter l'exécution ici
     }
+    
 
     public function uploadPhotos(array $files): string|false {
     try {
