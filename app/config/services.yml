@@ -11,12 +11,9 @@ abstract:
   abstractEntity: App\Core\Abstract\AbstractEntity
 
 services:
-  securityServ: App\Service\SecurityService
-  compteServ: App\Service\CompteService
-  transactionServ: App\Service\TransactionService
+  citoyenServ: App\Service\CitoyenService
+  
 
 repositories:
-  usersRepo: App\Repository\UsersRepository
-  compteRepo: App\Repository\CompteRepository
-  transactionRepo: App\Repository\TransactionRepository
-  telephoneRepo: App\Repository\TelephoneRepository
+  citoyenRepo: App\Repository\CitoyenRepository
+  
