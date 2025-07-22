@@ -16,9 +16,9 @@ class Migration
     {
         if (self::$pdo === null) {
           
-            self::$pdo = new \PDO($_ENV['dsn'],
-            $_ENV['DB_USER'],
-              $_ENV['DB_PASSWORD']);
+            self::$pdo = new \PDO(getenv('dsn'),
+            getenv('DB_USER'),
+              getenv('DB_PASSWORD'));
         }
     }
 
