@@ -9,16 +9,18 @@ use \PDOException;
 class Database extends Singleton{
     
     private $connection;
-    // private  static Database|null $instance = null;
 
       protected function __construct() {
         
         try {
+            $user = getenv('DB_USER');
+            $password = getenv('DB_PASSWORD');
+            $dsn = getenv('dsn');
            
             $this->connection = new PDO(
-              dsn,
-              DB_USER,
-              DB_PASSWORD,
+             $dsn,
+              $user,
+              $password,
               [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
