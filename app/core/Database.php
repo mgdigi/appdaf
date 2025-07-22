@@ -6,10 +6,10 @@ namespace App\Core;
 use \PDO;
 use \PDOException;
 
-class Database{
+class Database extends Singleton{
     
     private $connection;
-    private  static Database|null $instance = null;
+    // private  static Database|null $instance = null;
 
       protected function __construct() {
         
@@ -32,13 +32,7 @@ class Database{
         }
     }
 
-    public static function getInstance(){
-        if(self::$instance === null){
-            self::$instance = new Database();
-        }
-        return self::$instance;
-    }
-
+   
     public function getConnection():PDO{
         return $this->connection;
     }

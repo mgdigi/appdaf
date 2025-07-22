@@ -1,13 +1,12 @@
 <?php 
 namespace App\Repository;
 
-use ICitoyenRepository;
+use App\Repository\ICitoyenRepository;
 use \PDOException;
 
 use App\Core\Abstract\AbstractRepository;
-use App\Entity\Citoyen;
 
-class CitoyenRepository extends AbstractRepository {
+class CitoyenRepository extends AbstractRepository implements ICitoyenRepository{
 
     private string $table = 'citoyen';
     
@@ -18,23 +17,23 @@ class CitoyenRepository extends AbstractRepository {
      try{
         $sql = "SELECT * FROM $this->table";
         $stmt = $this->pdo->prepare($sql);
-        $result = $stmt->execute();
-       
+        $stmt->execute();
+     
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         
-        
-     }catch (Exception $e) {
-        error_log("Erreur de  recuperation des citoyens : " . $e->getMessage());
+     }catch (\Exception $e) {
+        throw new PDOException($e->getMessage());
+     }
     }
-   }
-     public function insert(array $data){        
+     public function insert($citoyen){        
      }
 
-    //  public function selectByCni(string $cni): ?Citoyen{
-    //     try{
+     public function selectByCni(string $cni){}
 
-    //     }
-    //  }
+     public function selectById($id){}
+
+
+
     
 
       

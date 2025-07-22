@@ -1,7 +1,0 @@
-<?php
-
-interface ICitoyenRepository{
-    public function selectByCni(string $cni): ?Citoyen;
-    public function insert(Citoyen $citoyen): bool;
-    public function selectById($id): ?Citoyen;
-}
