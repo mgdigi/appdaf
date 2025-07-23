@@ -31,4 +31,7 @@ try {
         'code' => 500,
         'message' => 'Erreur d\'initialisation: ' . $e->getMessage()
     ], JSON_UNESCAPED_UNICODE);
+
+    
+
 }

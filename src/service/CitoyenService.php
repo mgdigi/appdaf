@@ -12,6 +12,7 @@ class CitoyenService extends Singleton{
 
     public function __construct(){
         $this->citoyenRepository = App::getDependency('citoyenRepo');
+
     }
 
 
