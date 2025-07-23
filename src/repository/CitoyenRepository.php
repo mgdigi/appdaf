@@ -28,7 +28,12 @@ class CitoyenRepository extends AbstractRepository implements ICitoyenRepository
      public function insert($citoyen){        
      }
 
-     public function selectByCni(string $cni){}
+     public function selectByCni(string $cni){
+        $sql = "SELECT * FROM $this->table WHERE numerocni = :cni";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['cni' => $cni]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+     }
 
      public function selectById($id){}
 
