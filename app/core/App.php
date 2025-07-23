@@ -1,105 +1,56 @@
 <?php
 
+// 
+
+
 namespace App\Core;
 
-class App 
+class App
 {
-    private static array $dependencies = [];
-    private static string $servicesPath = __DIR__ . '/../config/services.yml';
+    private static ?DIContainer $container = null;
 
     public static function init(): void
     {
-
-        if (file_exists(self::$servicesPath)) {
-            $yamlContent = file_get_contents(self::$servicesPath);
-            
-            
-            self::$dependencies = self::parseYaml($yamlContent);
-            
-            
-        } else {
-            throw new \Exception("Le fichier services.yml est introuvable dans : " . self::$servicesPath);
-        }
+        self::$container = DIContainer::getInstance();
     }
 
-    private static function parseYaml(string $yamlContent): array
+    public static function get(string $identifier): object
     {
-        $lines = explode("\n", $yamlContent);
-        $result = [];
-        $currentCategory = null;
-
-        foreach ($lines as $lineNumber => $line) {
-            $originalLine = $line;
-            $line = trim($line);
-            
-            
-            
-            if (empty($line) || strpos($line, '#') === 0) {
-                continue;
-            }
-
-            if (strpos($line, ':') !== false && strpos($originalLine, '  ') !== 0) {
-                $currentCategory = trim(str_replace(':', '', $line));
-                $result[$currentCategory] = [];
-            }
-            elseif (strpos($originalLine, '  ') === 0 && strpos($line, ':') !== false) {
-                $parts = explode(':', $line, 2);
-                $key = trim($parts[0]);
-                $value = trim($parts[1]);
-                
-                if ($currentCategory) {
-                    $result[$currentCategory][$key] = $value;
-                }
-            } else {
-            }
-        }
-
-        return $result;
-    }
-
-    public static function getDependency(string $key): object
-    {
-        if (empty(self::$dependencies)) {
+        if (self::$container === null) {
             self::init();
         }
 
-        
-
-        foreach (self::$dependencies as $categoryKey => $dependencies) {
-            if (is_array($dependencies) && isset($dependencies[$key])) {
-                $className = $dependencies[$key];
-                
-                if (!class_exists($className)) {
-                    throw new \Exception("La classe {$className} n'existe pas");
-                }
-                
-                if (method_exists($className, 'getInstance')) {
-                    return $className::getInstance();
-                }
-                
-                return new $className();
-            }
-        }
-
-        throw new \Exception("La dépendance '{$key}' est introuvable");
+        return self::$container->get($identifier);
     }
 
-    public static function getDependenciesByCategory(string $category): array
-    {
-        if (empty(self::$dependencies)) {
-            self::init();
-        }
+    // public static function getContainer(): DIContainer
+    // {
+    //     if (self::$container === null) {
+    //         self::init();
+    //     }
 
-        if (!isset(self::$dependencies[$category])) {
-            throw new \Exception("La catégorie '{$category}' n'existe pas");
-        }
+    //     return self::$container;
+    // }
 
-        return self::$dependencies[$category];
-    }
+    // public static function getDependency(string $key): object
+    // {
+    //     return self::get($key);
+    // }
 
-    public static function reload(): void
-    {
-        self::$dependencies = [];
-        self::init();
-    }
+    // public static function bind(string $abstract, string $concrete): void
+    // {
+    //     if (self::$container === null) {
+    //         self::init();
+    //     }
+
+    //     self::$container->bind($abstract, $concrete);
+    // }
+
+    // public static function reload(): void
+    // {
+    //     if (self::$container !== null) {
+    //         self::$container->reload();
+    //     }
+    // }
 }
+

@@ -11,14 +11,18 @@ $dotenv->load();
 class Migration
 {
     private static ?\PDO $pdo = null;
-
+   
     private static function connect()
     {
+        $dsn='pgsql:host=dpg-d1vrst6r433s7380bb7g-a.oregon-postgres.render.com;port=5432;dbname=proph_db';
+        $username = "appdaf_user";
+        $password = 'PitH91FyeVXdrv9Gzr33W46EeEV4c1T2';
+
         if (self::$pdo === null) {
           
-            self::$pdo = new \PDO(getenv('dsn'),
-            getenv('DB_USER'),
-              getenv('DB_PASSWORD'));
+            self::$pdo = new \PDO($dsn,
+            $username,
+              $password);
         }
     }
 

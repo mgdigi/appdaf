@@ -88,7 +88,8 @@ class Router extends Singleton
                 return;
             }
 
-            $controller = new $controllerClass();
+            $controller = App::get($controllerClass);
+
             
             if (!method_exists($controller, $method)) {
                 self::sendJsonResponse(['error' => 'Method not found'], 500);

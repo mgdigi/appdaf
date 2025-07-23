@@ -13,13 +13,16 @@ class Seeder
 
     private static function connect()
     {
+        $dsn='pgsql:host=dpg-d1vrst6r433s7380bb7g-a.oregon-postgres.render.com;port=5432;dbname=proph_db';
+        $username = "appdaf_user";
+        $password = 'PitH91FyeVXdrv9Gzr33W46EeEV4c1T2';
         if (self::$pdo === null) {
             $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
             $dotenv->load();
 
-             self::$pdo = new \PDO(getenv('dsn'),
-            getenv('DB_USER'),
-              getenv('DB_PASSWORD'));
+             self::$pdo = new \PDO($dsn,
+            $username,
+              $password);
             
             self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
