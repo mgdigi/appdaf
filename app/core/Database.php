@@ -6,9 +6,18 @@ namespace App\Core;
 use \PDO;
 use \PDOException;
 
-class Database extends Singleton{
+class Database{
     
     private $connection;
+    private  static Database|null $instance = null;
+
+
+    public static function getInstance(): self {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
 
       protected function __construct() {
         

@@ -4,7 +4,7 @@ services:
   php-fpm:
     build:
       context: .
-      dockerfile: Dockerfile.fpm
+      dockerfile: Dockerfile
     container_name: php_fpm_app
     volumes:
       - .:/app
@@ -26,20 +26,7 @@ services:
     networks:
       - central_net
 
-  php-cli:
-    build:
-      context: .
-      dockerfile: Dockerfile.cli
-    container_name: php_appdaf
-    volumes:
-      - ./src:/app
-    working_dir: /app
-    env_file:
-      - .env
-    networks:
-      - central_net
-    tty: true
-    stdin_open: true
+ 
 
 networks:
   central_net:
