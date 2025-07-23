@@ -10,9 +10,10 @@ class CitoyenController  extends AbstractController
 {
     private CitoyenService $citoyenService;
 
-    public function __construct()
+    public function __construct(CitoyenService $citoyenService)
     {
-        $this->citoyenService = App::getDependency('citoyenServ');
+        $this->citoyenService = $citoyenService;
+        // $this->citoyenService = App::getDependency('citoyenServ');
     }
 
     /**
@@ -28,7 +29,7 @@ class CitoyenController  extends AbstractController
                 'success' => true,
                 'message' => 'Citoyens récupérés avec succès',
                 'data' => $citoyens,
-                'count' => count($citoyens)
+                'count' => count($citoyens)                                                                                                                                                                                                                                                                                                                                                                                                                     
             ];
             
             $this->renderJson($response, 200);
@@ -44,53 +45,51 @@ class CitoyenController  extends AbstractController
         }
     }
 
-    /**
-     * Récupère un citoyen par son ID
-     * GET /api/citoyens/{id}
-     */
-    // public function show($params = [])
-    // {
-    //     try {
-    //         $id = $params['id'] ?? null;
+    
+    
+    public function show($params = [])
+    {
+        try {
+            $cni = $params['cni'] ?? null;
             
-    //         if (!$id) {
-    //             $response = [
-    //                 'success' => false,
-    //                 'message' => 'ID du citoyen requis'
-    //             ];
-    //             $this->renderJson($response, 400);
-    //             return;
-    //         }
+            if (!$cni) {
+                $response = [
+                    'success' => false,
+                    'message' => 'ID du citoyen requis'
+                ];
+                $this->renderJson($response, 400);
+                return;
+            }
 
-    //         $citoyen = $this->citoyenService->getCitoyenById($id);
+            $citoyen = $this->citoyenService->getCitoyenByCni($cni);
             
-    //         if (!$citoyen) {
-    //             $response = [
-    //                 'success' => false,
-    //                 'message' => 'Citoyen non trouvé'
-    //             ];
-    //             $this->renderJson($response, 404);
-    //             return;
-    //         }
+            if (!$citoyen) {
+                $response = [
+                    'success' => false,
+                    'message' => 'Citoyen non trouvé'
+                ];
+                $this->renderJson($response, 404);
+                return;
+            }
 
-    //         $response = [
-    //             'success' => true,
-    //             'message' => 'Citoyen récupéré avec succès',
-    //             'data' => $citoyen
-    //         ];
+            $response = [
+                'success' => true,
+                'message' => 'Citoyen récupéré avec succès',
+                'data' => $citoyen
+            ];
             
-    //         $this->renderJson($response, 200);
+            $this->renderJson($response, 200);
             
-    //     } catch (\Exception $e) {
-    //         $response = [
-    //             'success' => false,
-    //             'message' => 'Erreur lors de la récupération du citoyen',
-    //             'error' => $e->getMessage()
-    //         ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => 'Erreur lors de la récupération du citoyen',
+                'error' => $e->getMessage()
+            ];
             
-    //         $this->renderJson($response, 500);
-    //     }
-    // }
+            $this->renderJson($response, 500);
+        }
+    }
 
     // /**
     //  * Créer un nouveau citoyen
@@ -151,25 +150,25 @@ class CitoyenController  extends AbstractController
     //     }
     // }
 
-    // /**
-    //  * Rechercher des citoyens
-    //  * GET /api/citoyens/search?q=terme
-    //  */
+    /**
+     * Rechercher des citoyens
+     * GET /api/citoyens/search?q=terme
+     */
     // public function search()
     // {
     //     try {
-    //         $searchTerm = $_GET['q'] ?? '';
+    //         $searchTerm = $_GET['cni'] ?? '';
             
     //         if (empty($searchTerm)) {
     //             $response = [
     //                 'success' => false,
     //                 'message' => 'Terme de recherche requis (paramètre q)'
     //             ];
-    //             $this->renderJson($response, 400);
+    //             $this->renderJson($response,400 );
     //             return;
     //         }
 
-    //         $citoyens = $this->citoyenService->searchCitoyens($searchTerm);
+    //         $citoyens = $this->citoyenService->getCitoyenByCni($searchTerm);
             
     //         $response = [
     //             'success' => true,
