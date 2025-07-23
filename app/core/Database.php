@@ -24,12 +24,13 @@ class Database{
         try {
             $user = getenv('DB_USER');
             $password = getenv('DB_PASSWORD');
-            $dsn = getenv('dsn');
+            $dsn='pgsql:host=dpg-d1vrst6r433s7380bb7g-a.oregon-postgres.render.com;port=5432;dbname=appdaf_db_0hqt';
+
            
             $this->connection = new PDO(
-             $dsn,
-              $user,
-              $password,
+             dsn,
+              DB_USER,
+              DB_PASSWORD,
               [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

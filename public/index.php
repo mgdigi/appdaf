@@ -1,5 +1,8 @@
 <?php
  use App\Core\Router;
+require_once __DIR__ . '/../vendor/autoload.php';
+
+ require_once '../app/config/bootstrap.php';
 
 header('Content-Type: application/json; charset=UTF-8');
 
