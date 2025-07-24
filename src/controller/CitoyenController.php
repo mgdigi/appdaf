@@ -13,7 +13,6 @@ class CitoyenController  extends AbstractController
     public function __construct(CitoyenService $citoyenService)
     {
         $this->citoyenService = $citoyenService;
-        // $this->citoyenService = App::getDependency('citoyenServ');
     }
 
     /**

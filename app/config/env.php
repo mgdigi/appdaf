@@ -1,8 +1,12 @@
 <?php
+use Dotenv\Dotenv;
 
-$envPath = __DIR__ . '/../../.env';
 
-if (file_exists($envPath)) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
-    $dotenv->safeLoad();
-}
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
+
+define('DB_USER', $_ENV['DB_USER']);
+define('DB_PASSWORD', $_ENV['DB_PASSWORD']);
+define('APP_URL', $_ENV['APP_URL']);
+define('dsn', $_ENV['dsn'] );
