@@ -19,6 +19,11 @@ COPY . .
 
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
+RUN echo "DB_USER=\${DB_USER}" > .env && \
+    echo "DB_PASSWORD=\${DB_PASSWORD}" >> .env && \
+    echo "APP_URL=\${APP_URL}" >> .env && \
+    echo "dsn=\${dsn}" >> .env
+
 COPY nginx.conf /etc/nginx/sites-available/default
 COPY supervisord.conf /etc/supervisord.conf
 
