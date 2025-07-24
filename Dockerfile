@@ -27,6 +27,8 @@ RUN echo "DB_USER=\${DB_USER}" > .env && \
 COPY nginx.conf /etc/nginx/sites-available/default
 COPY supervisord.conf /etc/supervisord.conf
 
+
+
 EXPOSE 80
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
