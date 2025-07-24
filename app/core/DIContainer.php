@@ -1,6 +1,5 @@
 <?php
 
-// ===== 1. DIContainer - Le cœur du système =====
 namespace App\Core;
 
 use ReflectionClass;
