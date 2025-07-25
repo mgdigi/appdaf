@@ -46,6 +46,16 @@ class CitoyenRepository extends AbstractRepository implements ICitoyenRepository
         if ($citoyenData) {
             $citoyen = new Citoyen(); 
             $citoyen->setId($citoyenData['id']);
+            $citoyenData->setNom($citoyenData['nom']);
+            $citoyenData->setPrenom($citoyenData['prenom']);
+            $citoyenData->setNumerocni($citoyenData['numerocni']);
+            $citoyenData->setPhotoIdentite($citoyenData['photoidentite']);
+            $citoyenData->setLieuNaiss($citoyenData['lieunaiss']);
+            $citoyenData->setDateNaiss($citoyenData['datenaiss']);
+
+
+
+
             
             $this->journalRepository->insert([
                 'date' => date('Y-m-d'),
