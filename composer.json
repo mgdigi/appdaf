@@ -7,9 +7,7 @@
             "App\\Repository\\": "src/repository/",
             "App\\Service\\": "src/service/",
             "App\\Controller\\": "src/controller/",
-            "App\\Core\\Abstract\\": "app/core/abstract/",
-            "App\\Core\\Middlewares\\": "app/core/middlewares/",
-            "App\\Config\\Translate\\Fr\\": "app/config/translate/fr/"
+            "App\\Core\\Abstract\\": "app/core/abstract/"
         }
     },
     "authors": [
