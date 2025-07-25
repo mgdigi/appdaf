@@ -48,7 +48,40 @@ class Seeder
                 'photoIdentite' => 'photo_identite1.png',
                 'lieuNaiss' => 'Dakar',
                 'dateNaiss' => '1980-01-01',
+            ],
+            [
+               'nom' => 'Ndiaye',
+                'prenom' => 'assane',
+                'numerocni' => '1344567890100',
+                'photoIdentite' => 'photo_identite2.png',
+                'lieuNaiss' => 'Dakar',
+                'dateNaiss' => '1983-11-21', 
+            ],
+            [
+                'nom' => 'Mbaye',
+                'prenom' => 'makhari',
+                'numerocni' => '1234567890100',
+                'photoIdentite' => 'photo_identite1.png',
+                'lieuNaiss' => 'Dakar',
+                'dateNaiss' => '1990-10-23',
+            ],
+            [
+                'nom' => 'Diop',
+                'prenom' => 'sidi',
+                'numerocni' => '1234567890100',
+                'photoIdentite' => 'photo_identite1.png',
+                'lieuNaiss' => 'Dakar',
+                'dateNaiss' => '1980-01-01',
+            ],
+            [
+                'nom' => 'Diop',
+                'prenom' => 'sidi',
+                'numerocni' => '1234567890100',
+                'photoIdentite' => 'photo_identite1.png',
+                'lieuNaiss' => 'Dakar',
+                'dateNaiss' => '1980-01-01',
             ]
+
 
         ];
 

@@ -1,17 +1,22 @@
 <?php 
 namespace App\Repository;
 
-use App\Repository\ICitoyenRepository;
+use Cloudinary\Exception\Error;
+use JournalRepository;
 use \PDOException;
+use App\Entity\Citoyen;
 
+use App\Repository\ICitoyenRepository;
 use App\Core\Abstract\AbstractRepository;
 
 class CitoyenRepository extends AbstractRepository implements ICitoyenRepository{
 
     private string $table = 'citoyen';
+    private JournalRepository $journalRepository;
     
-    public function __construct(){
+    public function __construct(JournalRepository $journalRepository){
         parent::__construct();
+        $this->journalRepository = $journalRepository;
     }
    public function selectAll():array{
      try{
@@ -28,20 +33,53 @@ class CitoyenRepository extends AbstractRepository implements ICitoyenRepository
      public function insert($citoyen){        
      }
 
-     public function selectByCni(string $cni){
+     public function selectByCni(string $cni): ?Citoyen 
+{
+    $this->pdo->beginTransaction();
+    
+    try {
         $sql = "SELECT * FROM $this->table WHERE numerocni = :cni";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['cni' => $cni]);
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
-     }
+        $citoyenData = $stmt->fetch(\PDO::FETCH_ASSOC);
+        
+        if ($citoyenData) {
+            $citoyen = new Citoyen(); 
+            $citoyen->setId($citoyenData['id']);
+            
+            $this->journalRepository->insert([
+                'date' => date('Y-m-d'),
+                'heure' => date('H:i:s'), 
+                'localisation' => 'Dakar',
+                'ipadress' => $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1', 
+                'status' => 1, 
+                'citoyenId' => $citoyen->getId(),
+            ]);
+            
+            $this->pdo->commit();
+            return $citoyen;
+        } else {
+            $this->journalRepository->insert([
+                'date' => date('Y-m-d'),
+                'heure' => date('H:i:s'),
+                'localisation' => 'Dakar',
+                'ipadress' => $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1',
+                'status' => 0, 
+                'citoyenId' => null, 
+            ]);
+            
+            $this->pdo->commit();
+            return null;
+        }
+        
+    } catch (\Exception $e) {
+        $this->pdo->rollBack();
+        throw new \Exception("Erreur lors de la recherche du citoyen : " . $e->getMessage());
+    }
+}
 
-     public function selectById($id){}
 
 
-
-    
-
-      
 
    
 

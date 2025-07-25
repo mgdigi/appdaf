@@ -102,7 +102,7 @@ class Router extends Singleton
                 $controller->$method();
             }
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             self::sendJsonResponse(['error' => 'Internal server error', 'message' => $e->getMessage()], 500);
         }
     }

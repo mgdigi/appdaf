@@ -22,10 +22,7 @@ class Database{
       protected function __construct() {
         
         try {
-            $user = getenv('DB_USER');
-            $password = getenv('DB_PASSWORD');
-            $dsn='pgsql:host=dpg-d1vrst6r433s7380bb7g-a.oregon-postgres.render.com;port=5432;dbname=appdaf_db_0hqt';
-
+            
            
             $this->connection = new PDO(
              dsn,
