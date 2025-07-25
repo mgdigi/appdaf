@@ -19,7 +19,7 @@ class CitoyenService extends Singleton{
         return $this->citoyenRepository->selectAll();
     }
 
-    public function  getCitoyenByCni($cni):?array{
+    public function  getCitoyenByCni($cni){
         return $this->citoyenRepository->selectByCni($cni);
     }
 
