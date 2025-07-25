@@ -3,7 +3,6 @@
 namespace App\Core;
 
 use App\Core\Singleton;
-require_once "../app/config/middlewares.php";
 
 class Router extends Singleton
 {
@@ -72,13 +71,13 @@ class Router extends Singleton
     private static function executeRoute($route, $params = [])
     {
         try {
-            if (isset($route['middlewares'])) {
-                foreach ($route['middlewares'] as $middleware) {
-                    if (!self::executeMiddleware($middleware)) {
-                        return;
-                    }
-                }
-            }
+            // if (isset($route['middlewares'])) {
+            //     foreach ($route['middlewares'] as $middleware) {
+            //         if (!self::executeMiddleware($middleware)) {
+            //             return;
+            //         }
+            //     }
+            // }
 
             $controllerClass = $route['controller'];
             $method = $route['method'];
@@ -107,21 +106,7 @@ class Router extends Singleton
         }
     }
 
-    private static function executeMiddleware($middlewareName)
-    {
-        global $middlewares;
-        
-        if (isset($middlewares[$middlewareName])) {
-            $middlewareFunction = $middlewares[$middlewareName];
-            $result = $middlewareFunction();
-            
-            if ($result === false) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
+   
 
     private static function sendJsonResponse($data, $statusCode = 200)
     {
