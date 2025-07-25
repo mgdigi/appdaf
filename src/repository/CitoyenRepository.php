@@ -2,7 +2,7 @@
 namespace App\Repository;
 
 use Cloudinary\Exception\Error;
-use JournalRepository;
+use App\Repository\JournalRepository;
 use \PDOException;
 use App\Entity\Citoyen;
 
