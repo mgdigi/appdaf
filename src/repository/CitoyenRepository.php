@@ -33,7 +33,7 @@ class CitoyenRepository extends AbstractRepository implements ICitoyenRepository
      public function insert($citoyen){        
      }
 
-     public function selectByCni(string $cni): ?Citoyen 
+     public function selectByCni(string $cni): ?array 
 {
     $this->pdo->beginTransaction();
     
