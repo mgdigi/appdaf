@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Core\App;
 use App\Core\Singleton;
 use App\Repository\CitoyenRepository;
 
@@ -12,15 +11,15 @@ class CitoyenService extends Singleton{
 
     public function __construct(CitoyenRepository $citoyenRepository){
         $this->citoyenRepository = $citoyenRepository;
+        
 
     }
 
-
-    public function getAllCitoyens(){
+    public function getAllCitoyens():?array{
         return $this->citoyenRepository->selectAll();
     }
 
-    public function  getCitoyenByCni($cni){
+    public function  getCitoyenByCni($cni):?array{
         return $this->citoyenRepository->selectByCni($cni);
     }
 

@@ -21,6 +21,5 @@ abstract class AbstractRepository extends Database{
         $this->pdo = parent::getInstance()->getConnection();
     }
 
-    abstract public function selectAll();
 
 }

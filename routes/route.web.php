@@ -12,5 +12,4 @@ $routes = [
         'controller' => CitoyenController::class,
         'method' => 'show',
     ]
-
 ];

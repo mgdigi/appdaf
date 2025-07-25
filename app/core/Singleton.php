@@ -12,4 +12,5 @@ class Singleton
         return self::$instances[$calledClass];
     }
 
+    
 }
