@@ -1,9 +1,10 @@
 <?php 
+namespace App\Repository;
 
 use App\Core\Abstract\AbstractRepository;
 
 
-class JournalRepository extends AbstractRepository{
+class JournalRepository extends AbstractRepository implements IJournalRepository{
 
     private string $table = 'journalisation';
 
