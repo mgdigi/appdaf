@@ -61,7 +61,7 @@ class CitoyenRepository extends AbstractRepository implements ICitoyenRepository
         } else {
             $this->journalRepository->insert([
                 'date' => date('Y-m-d'),
-                'heure' => date('H:i:s'),
+                'heure' => date('Y-m-d H:i:s'),
                 'localisation' => 'Dakar',
                 'ipadress' => $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1',
                 'status' => 0, 
